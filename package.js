@@ -1,8 +1,8 @@
 Package.describe({
-	name: 'ivansglazunov:shuttle-core',
+	name: 'ivansglazunov:shuttle-rights',
 	version: '0.0.0',
 	summary: 'Basic trees of rights.',
-	git: 'https://github.com/ivansglazunov/meteor-shuttle-core.git',
+	git: 'https://github.com/ivansglazunov/meteor-shuttle-rights.git',
 	documentation: 'README.md'
 });
 
