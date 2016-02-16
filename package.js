@@ -14,9 +14,9 @@ Package.onUse(function(api) {
 	api.use('accounts-base');
 	
 	api.use('matb33:collection-hooks@0.8.1');
-	api.use('ivansglazunov:refs@0.0.1');
-	api.use('ivansglazunov:trees@1.1.3');
-	api.use('ivansglazunov:inserted@0.0.1');
+	api.use('ivansglazunov:refs@0.1.0');
+	api.use('ivansglazunov:trees@1.1.6');
+	api.use('ivansglazunov:inserted@0.0.2');
 	api.use('aldeed:collection2@2.8.0');
 	
 	api.addFiles([

@@ -1,6 +1,5 @@
 Shuttle.Used = new Mongo.Collection('shuttle:used');
 
-Shuttle.Used.attachRefs();
 Shuttle.Used.attachTree();
 Shuttle.Used.attachSchema({ _inserted: { type: insertedSchema() }});
 

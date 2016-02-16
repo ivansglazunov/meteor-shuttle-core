@@ -1,6 +1,5 @@
 Shuttle.Merged = new Mongo.Collection('shuttle:merged');
 
-Shuttle.Merged.attachRefs();
 Shuttle.Merged.attachTree();
 Shuttle.Merged.attachSchema({ _inserted: { type: insertedSchema() }});
 

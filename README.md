@@ -69,3 +69,11 @@ Tree of inherited the tree `used`. It symbolizes the complete unconditional righ
 ![Owning](http://ivansglazunov.github.io/meteor-shuttle-core/owning.svg)
 
 * The `owning` right given to 1 is automatically inherited to 2, 3, 4 and 5
+
+## `Shuttle.right(tree: Mongo.Collection, object?: Document, user? User) => Cursor`
+Look for for the rights of the user in the tree in relation to the object. If the user is not transmitted, call `Shuttle.defaultUser(tree: Mongo.Collection, object?: Document) => ?User` to get default user. If not getted - looking for user with id "guest". If not found it perceives temporary object { _id: "guest" } as a user. Returns cursor contains or does not contain the appropriate rights.
+
+> Define your version of `Shuttle.defaultUser(tree: Mongo.Collection, object?: Document) => ?User` if you need.
+
+## `Shuttle.can(tree: Mongo.Collection, object?: Document, user? User) => Boolean`
+The short version of the method `.right`.
