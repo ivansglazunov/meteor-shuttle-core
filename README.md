@@ -85,5 +85,8 @@ The short version of the method `.right`.
 
 ## Versions
 
+### 0.0.2
+* Fix `stevezhu:lodash@4.3.0`
+
 ### 0.0.1
 * Added `watch` to readme.
