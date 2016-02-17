@@ -46,6 +46,11 @@ The rest has the same properties that used.
 6. user 1 remove document 2 from the tree `used`
 7. server will automatically add it to the tree `unused`
 
+To automatically add document after inserting to tree `unused`, call:
+```js
+Shuttle.Unused.watch(collection);
+```
+
 ### Used
 Tree of nesting to transfer ownership rights as `owning`.
 The user must manually connect his document to this tree or else, with time, it will be cleared as the unused.
@@ -77,3 +82,8 @@ Look for for the rights of the user in the tree in relation to the object. If th
 
 ## `Shuttle.can(tree: Mongo.Collection, object?: Document, user? User) => Boolean`
 The short version of the method `.right`.
+
+## Versions
+
+### 0.0.1
+* Added `watch` to readme.

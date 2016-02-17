@@ -37,8 +37,8 @@ if (Meteor.isServer) {
 	});
 
 	// Create unused after insertion of the documents in collection.
-	Mongo.Collection.prototype.attachUnused = function () {
-		var collection = this;
+	// Shuttle.Unused.watch(collection: Mongo.Collection)
+	Shuttle.Unused.watch = function (collection) {
 		collection.after.insert(function(userId, _document) {
 			var document = collection._transform(_document);
 			Shuttle.Unused.insert({
