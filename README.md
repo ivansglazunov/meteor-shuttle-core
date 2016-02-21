@@ -85,6 +85,9 @@ The short version of the method `.right`.
 
 ## Versions
 
+### 0.0.5
+* Deny remove for all, only delete allowed
+
 ### 0.0.4
 * Support `ivansglazunov:history`
 * Support `ivansglazunov:delete`

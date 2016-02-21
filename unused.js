@@ -1,15 +1,19 @@
 Shuttle.Unused = new Mongo.Collection('shuttle:unused');
 
 Shuttle.Unused.attachTree();
+Shuttle.Unused.attachDelete();
+
 if (Meteor.isServer) {
 	History.watchInsert(Shuttle.Unused);
 	History.watchRemove(Shuttle.Unused);
-	Shuttle.Unused.attachDelete();
 }
 
 // It is not for users...
 Shuttle.Unused.deny({
 	insert: function(userId, _unused) {
+		return true;
+	},
+	update: function() {
 		return true;
 	},
 	remove: function(userId, _unused) {

@@ -1,11 +1,11 @@
 Shuttle.Merged = new Mongo.Collection('shuttle:merged');
 
 Shuttle.Merged.attachTree();
+Shuttle.Merged.attachDelete();
 
 if (Meteor.isServer) {
 	History.watchInsert(Shuttle.Merged);
 	History.watchRemove(Shuttle.Merged);
-	Shuttle.Merged.attachDelete();
 	Shuttle.Merged.inheritTree(Shuttle.Merged);
 }
 
@@ -27,7 +27,7 @@ Shuttle.Merged.deny({
 		}
 		throw new Meteor.Error('You are not permitted to join '+JSON.stringify(merge._target));
 	},
-	remove: function(userId, _merge) {
+	update: function(userId, _merge, fieldNames, modifier) {
 		var merge = Shuttle.Merged._transform(_merge);
 		if (userId) {
 			var user = Meteor.users.findOne(userId);
@@ -42,6 +42,9 @@ Shuttle.Merged.deny({
 				return false; // The owner can do anything.
 			}
 		}
-		throw new Meteor.Error('You are not permitted to remove '+JSON.stringify(merge.Ref()));
+		throw new Meteor.Error('You are not permitted to update '+JSON.stringify(merge.Ref()));
+	},
+	remove: function(userId, _merge) {
+		return true;
 	}
 });

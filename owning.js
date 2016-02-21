@@ -1,12 +1,11 @@
 Shuttle.Owning = new Mongo.Collection('shuttle:owning');
 
-Shuttle.Owning.attachRefs();
 Shuttle.Owning.attachTree();
+Shuttle.Owning.attachDelete();
 
 if (Meteor.isServer) {
 	History.watchInsert(Shuttle.Owning);
 	History.watchRemove(Shuttle.Owning);
-	Shuttle.Owning.attachDelete();
 	Shuttle.Used.inheritTree(Shuttle.Owning);
 	Shuttle.Unused.inheritTree(Shuttle.Owning);
 }
@@ -23,20 +22,23 @@ Shuttle.Owning.deny({
 		}
 		throw new Meteor.Error('You are not permitted to insert owning '+JSON.stringify(owning));
 	},
-	remove: function(userId, _owning) {
+	update: function(userId, _owning, fieldNames, modifier) {
 		var owning = Shuttle.Owning._transform(_owning);
 		if (userId) {
 			var user = Meteor.users.findOne(userId);
 	
 			if (Shuttle.can(Shuttle.Owning, owning.source(), user)) { // User can own target.
-				if (Shuttle.Owning.find(owning.source().Ref('_source')).count() > 1) { // Not last owning link.
+				if (!lodash.includes(fieldNames, '_deleted') || Shuttle.Owning.find(lodash.merge(owning.source().Ref('_source'), { _id: { $ne: owning._id } })).count()) { // Not last owning link.
 					return false; // a owner can do anything.
 				} else {
-					throw new Meteor.Error('You can not remove last for source owning link.');
+					throw new Meteor.Error('You can not delete last for source owning link.');
 				}
 			}
 		}
-		throw new Meteor.Error('You are not permitted to remove owning '+JSON.stringify(owning.Ref()));
+		throw new Meteor.Error('You are not permitted to update owning '+JSON.stringify(owning.Ref()));
+	},
+	remove: function(userId, _owning) {
+		return true;
 	}
 });
 
