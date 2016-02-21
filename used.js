@@ -1,7 +1,11 @@
 Shuttle.Used = new Mongo.Collection('shuttle:used');
 
 Shuttle.Used.attachTree();
-Shuttle.Used.attachSchema({ _inserted: { type: insertedSchema() }});
+if (Meteor.isServer) {
+	History.watchInsert(Shuttle.Used);
+	History.watchRemove(Shuttle.Used);
+	Shuttle.Used.attachDelete();
+}
 
 Shuttle.Used.deny({
 	insert: function(userId, _use) {

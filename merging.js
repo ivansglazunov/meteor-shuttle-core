@@ -1,7 +1,11 @@
 Shuttle.Merging = new Mongo.Collection('shuttle:merging');
 
 Shuttle.Merging.attachTree();
-Shuttle.Merging.attachSchema({ _inserted: { type: insertedSchema() }});
+if (Meteor.isServer) {
+	History.watchInsert(Shuttle.Merging);
+	History.watchRemove(Shuttle.Merging);
+	Shuttle.Merging.attachDelete();
+}
 
 Shuttle.Merging.deny({
 	insert: function(userId, _merging) {

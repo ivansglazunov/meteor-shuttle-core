@@ -2,10 +2,14 @@ Shuttle.Owning = new Mongo.Collection('shuttle:owning');
 
 Shuttle.Owning.attachRefs();
 Shuttle.Owning.attachTree();
-Shuttle.Owning.attachSchema({ _inserted: { type: insertedSchema() }});
 
-if (Meteor.isServer) Shuttle.Used.inheritTree(Shuttle.Owning);
-if (Meteor.isServer) Shuttle.Unused.inheritTree(Shuttle.Owning);
+if (Meteor.isServer) {
+	History.watchInsert(Shuttle.Owning);
+	History.watchRemove(Shuttle.Owning);
+	Shuttle.Owning.attachDelete();
+	Shuttle.Used.inheritTree(Shuttle.Owning);
+	Shuttle.Unused.inheritTree(Shuttle.Owning);
+}
 
 Shuttle.Owning.deny({
 	insert: function(userId, _owning) {

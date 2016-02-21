@@ -85,6 +85,14 @@ The short version of the method `.right`.
 
 ## Versions
 
+### 0.0.4
+* Support `ivansglazunov:history`
+* Support `ivansglazunov:delete`
+
+### 0.0.3
+* Remove `ivansglazunov:inserted`
+* Add `ivansglazunov:history`
+
 ### 0.0.2
 * Fix `stevezhu:lodash@4.3.0`
 
