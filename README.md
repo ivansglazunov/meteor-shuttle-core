@@ -85,6 +85,9 @@ The short version of the method `.right`.
 
 ## Versions
 
+### 0.0.6
+* Support `ivansglazunov:restrict` with `delete` and `undelete` restrictions
+
 ### 0.0.5
 * Deny remove for all, only delete allowed
 

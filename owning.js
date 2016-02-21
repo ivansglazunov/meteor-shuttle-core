@@ -15,27 +15,50 @@ Shuttle.Owning.deny({
 		var owning = Shuttle.Owning._transform(_owning);
 		if (userId) {
 			var user = Meteor.users.findOne(userId);
-	
+			
+			if (!Shuttle.Owning.linksFrom(owning.source()).count() && lodash.isEqual(owning._target, user.Ref())) {
+				return false; // If wirst owning.
+			}
+			
 			if (Shuttle.can(Shuttle.Owning, owning.source(), user)) { // User can own source.
 				return false; // The owner can do anything.
 			}
 		}
-		throw new Meteor.Error('You are not permitted to insert owning '+JSON.stringify(owning));
+		return true;
 	},
 	update: function(userId, _owning, fieldNames, modifier) {
+		return true;
+	},
+	delete: function(userId, _owning) {
 		var owning = Shuttle.Owning._transform(_owning);
+		
+		if (lodash.isEqual(owning._target, owning._source)) {
+			throw new Meteor.Error('It is forbidden to delete the owning right where source is equal with target.');
+		}
+		
 		if (userId) {
 			var user = Meteor.users.findOne(userId);
-	
+			
 			if (Shuttle.can(Shuttle.Owning, owning.source(), user)) { // User can own target.
-				if (!lodash.includes(fieldNames, '_deleted') || Shuttle.Owning.find(lodash.merge(owning.source().Ref('_source'), { _id: { $ne: owning._id } })).count()) { // Not last owning link.
+				if (Shuttle.Owning.find(lodash.merge(owning.source().Ref('_source'), { _id: { $ne: owning._id } })).count()) { // Not last owning link.
 					return false; // a owner can do anything.
 				} else {
 					throw new Meteor.Error('You can not delete last for source owning link.');
 				}
 			}
 		}
-		throw new Meteor.Error('You are not permitted to update owning '+JSON.stringify(owning.Ref()));
+		return true;
+	},
+	undelete: function(userId, _owning) {
+		var owning = Shuttle.Owning._transform(_owning);
+		if (userId) {
+			var user = Meteor.users.findOne(userId);
+	
+			if (Shuttle.can(Shuttle.Owning, owning.source(), user)) { // User can own target.
+				return false; // a owner can do anything.
+			}
+		}
+		return true;
 	},
 	remove: function(userId, _owning) {
 		return true;

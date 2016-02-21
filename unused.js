@@ -1,7 +1,6 @@
 Shuttle.Unused = new Mongo.Collection('shuttle:unused');
 
 Shuttle.Unused.attachTree();
-Shuttle.Unused.attachDelete();
 
 if (Meteor.isServer) {
 	History.watchInsert(Shuttle.Unused);

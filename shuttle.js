@@ -24,8 +24,20 @@ Shuttle.right = function(tree, object, user) {
 	return tree.find(query);
 };
 
-// Shuttle.can(tree, object, user) => Boolean
+// Shuttle.can((tree:Mongo.Collection)|(action:String), object, user) => Boolean
 Shuttle.can = function(tree, object, user) {
+	if (!user) {
+		var user = Meteor.user();
+		if (user) var user = user;
+		else if (Shuttle.defaultUser) var user = Shuttle.defaultUser(tree, object);
+		else user = Meteor.users.findOne('guest');
+	}
+	if (!user) {
+		var user = Meteor.users._transform({ _id: 'guest' });
+	}
 	if (!object) return false;
-	return !!Shuttle.right(tree, object, user).count();
+	if (tree instanceof Mongo.Collection) return !!Shuttle.right(tree, object, user).count();
+	else if (typeof(tree) == 'string') {
+		return Mongo.Collection.get(object.Ref().collection).checkRestrictions(tree, user._id, object);
+	}
 };
