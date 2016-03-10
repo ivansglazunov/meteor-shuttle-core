@@ -1,7 +1,7 @@
 Package.describe({
 	name: 'ivansglazunov:shuttle-rights',
-	version: '0.0.6',
-	summary: 'Basic trees of rights.',
+	version: '0.0.7',
+	summary: 'DEPRECATED',
 	git: 'https://github.com/ivansglazunov/meteor-shuttle-rights.git',
 	documentation: 'README.md'
 });

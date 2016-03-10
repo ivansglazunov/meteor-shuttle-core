@@ -1,4 +1,4 @@
-# meteor-shuttle-rights
+# ~~meteor-shuttle-rights~~ DEPRECATED
 
 ```
 meteor add ivansglazunov:shuttle-rights
